@@ -8,13 +8,13 @@ Este projeto foi criado durante a Imersão React da Alura.
 
 - Create React App
 - Styled Components
-- Deploy com Vercel
+- Deploy com front-end Vercel
 - React Router DOM
 - Formulários
 - Componentes reutilizáveis
 - Padrões de código com EsLint
 - Servidor com json-server
-
+- Deploy do back-end com Heroku
 
 ## Saiba mais
 
