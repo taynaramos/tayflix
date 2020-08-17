@@ -4,6 +4,8 @@ import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
 
+import useForm from '../../../hooks/useForm';
+
 function CadastroCategoria() {
   const valoresIniciais = {
     nome: '',
@@ -11,34 +13,10 @@ function CadastroCategoria() {
     cor: '',
   };
 
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
   const [categorias, setCategorias] = useState([]);
-  const [values, setValues] = useState(valoresIniciais);
-
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-    });
-  }
-
-  function handleChange(event) {
-    setValue(
-      event.target.getAttribute('name'),
-      event.target.value,
-    );
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault(); // anula o efeito do evento
-    setCategorias([
-      ...categorias,
-      values,
-    ]);
-    setValues(valoresIniciais);
-  }
 
   useEffect(() => {
-
     const URL = window.location.hostname.includes('localhost')
       ? 'http://localhost:8080/categorias'
       : 'https://tayflix-two.herokuapp.com/categorias';
@@ -76,7 +54,16 @@ function CadastroCategoria() {
         {values.nome}
       </h1>
 
-      <form onSubmit={(event) => handleSubmit(event)}>
+      <form onSubmit={function handleSubmit(event) {
+        event.preventDefault(); // anula o efeito do evento
+        setCategorias([
+          ...categorias,
+          values,
+        ]);
+
+        clearForm();
+      }}
+      >
 
         <FormField
           type="text"
@@ -115,8 +102,8 @@ function CadastroCategoria() {
 
       <ul>
         {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>
